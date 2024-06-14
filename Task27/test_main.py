@@ -39,11 +39,12 @@ class TestOrangeHRM():
             # Username - 2
             # Password - 3
             # Test Results - 7
-            locator = Locators.WebLocators()
+            locator = Locators.WebLocators() # here we created variables for code easy to understand
             sheet = Data.WebData()
             for row in range(2, Data.WebData().rowCount() + 1):
                 username = sheet.readData(row, 2)
                 password = sheet.readData(row, 3)
+                # Here we write a current date , time & username in the excel. 
                 sheet.writeData(row,4,datetime.now().strftime("%Y-%m-%d"))
                 sheet.writeData(row, 5, datetime.now().strftime("%H:%M:%S"))
                 sheet.writeData(row, 6,"Selva")
@@ -55,10 +56,12 @@ class TestOrangeHRM():
 
                 curenturl = self.driver.current_url
                 if (curenturl == Data.WebData().dashboardURL):
-
+                    
                     print("login successfully")
+                    # if we successfully loged in means it will write test passed in  excel 
                     sheet.writeData(row,7,"Passed")
 
+                    # This is locate the logout button and click on that button
                     self.wait.until(EC.presence_of_element_located((By.XPATH, locator.dropdownMenuLocator))).click()
                     self.wait.until(EC.presence_of_element_located((By.XPATH, locator.logoutLocator))).click()
                 else:
